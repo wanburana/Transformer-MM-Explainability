@@ -75,7 +75,7 @@ class Generator:
         one_hot[0, target_index, index] = 1
         one_hot_vector = one_hot.clone().detach()
         one_hot.requires_grad_(True)
-        one_hot = torch.sum(one_hot.cuda() * outputs['pred_logits'])
+        one_hot = torch.sum(one_hot.to(outputs['pred_logits'].device) * outputs['pred_logits'])
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
@@ -157,7 +157,7 @@ class Generator:
         one_hot[0, target_index, index] = 1
         one_hot_vector = one_hot
         one_hot.requires_grad_(True)
-        one_hot = torch.sum(one_hot.cuda() * outputs)
+        one_hot = torch.sum(one_hot.to(outputs.device) * outputs)
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
@@ -288,7 +288,7 @@ class Generator:
         one_hot = torch.zeros_like(outputs['pred_logits']).to(outputs['pred_logits'].device)
         one_hot[0, target_index, index] = 1
         one_hot.requires_grad_(True)
-        one_hot = torch.sum(one_hot.cuda() * outputs['pred_logits'])
+        one_hot = torch.sum(one_hot.to(outputs['pred_logits'].device) * outputs['pred_logits'])
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
@@ -365,7 +365,7 @@ class GeneratorAlbationNoAgg:
         one_hot[0, target_index, index] = 1
         one_hot_vector = one_hot
         one_hot.requires_grad_(True)
-        one_hot = torch.sum(one_hot.cuda() * outputs)
+        one_hot = torch.sum(one_hot.to(outputs.device) * outputs)
 
         self.model.zero_grad()
         one_hot.backward(retain_graph=True)
