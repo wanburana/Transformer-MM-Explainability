@@ -69,7 +69,7 @@ class DETR(nn.Module):
         self.memory_shape = memory.shape
 
         outputs_class = self.class_embed(hs)
-        a = self.index_select(outputs_class, 0, torch.tensor([5]).cuda()).squeeze(0)
+        a = self.index_select(outputs_class, 0, torch.tensor([5]).to(outputs_class.device)).squeeze(0)
         outputs_coord = self.bbox_embed(hs).sigmoid()
         out = {'pred_logits': a, 'pred_boxes': outputs_coord[-1]}
         if self.aux_loss:
